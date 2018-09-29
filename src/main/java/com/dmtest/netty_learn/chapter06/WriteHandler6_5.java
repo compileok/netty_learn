@@ -7,7 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
  *
  * 2018/9/28.
  */
-public class WriteHandler extends ChannelHandlerAdapter {
+public class WriteHandler6_5 extends ChannelHandlerAdapter {
 
     private ChannelHandlerContext ctx;
 

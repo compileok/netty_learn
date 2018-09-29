@@ -8,11 +8,13 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  *  2018/9/28.
  */
 @ChannelHandler.Sharable
-public class SharableHandler extends ChannelInboundHandlerAdapter {
+public class NotSharableHandler6_7 extends ChannelInboundHandlerAdapter{
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx,Object msg) {
-        System.out.println(" Channel read message " + msg);
+    private int count;
+
+    public void channelRead(ChannelHandlerContext ctx,Object msg){
+        count ++;
+        System.out.println(" channelRead(...) called the " + count + " time. ");
         ctx.fireChannelRead(msg);
     }
 
