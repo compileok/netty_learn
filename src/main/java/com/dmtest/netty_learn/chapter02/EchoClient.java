@@ -1,20 +1,16 @@
 package com.dmtest.netty_learn.chapter02;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.pool.ChannelHealthChecker;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.CharsetUtil;
 
-import java.awt.*;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 
 /**
  * Created by deming on 2018/9/8.

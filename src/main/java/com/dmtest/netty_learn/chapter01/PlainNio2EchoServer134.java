@@ -14,7 +14,6 @@ import java.util.concurrent.CountDownLatch;
  */
 public class PlainNio2EchoServer134 {
 
-
     public void serve(int port) throws Exception {
 
         System.out.println("Listening for connections on port " + port);

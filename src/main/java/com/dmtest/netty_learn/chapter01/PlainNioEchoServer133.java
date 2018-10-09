@@ -2,7 +2,6 @@ package com.dmtest.netty_learn.chapter01;
 
 import com.dmtest.netty_learn.utils.CloseUtil;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.nio.ByteBuffer;
@@ -22,9 +21,7 @@ import java.util.Set;
 public class PlainNioEchoServer133 {
 
     public void serve(int port) throws Exception{
-
         System.out.println(" Listening for connection on port:" +port);
-
 
         ServerSocketChannel channel = ServerSocketChannel.open();
 
@@ -44,7 +41,6 @@ public class PlainNioEchoServer133 {
             }catch (Exception e) {
                 break;
             }
-
             Set readyKey = selector.selectedKeys();
 
             Iterator it = readyKey.iterator();
@@ -64,7 +60,6 @@ public class PlainNioEchoServer133 {
                         client.register(selector,SelectionKey.OP_WRITE|SelectionKey.OP_READ, ByteBuffer.allocate(100));
 
                     }
-
 
                     if(key.isReadable()) {
                         SocketChannel client  = (SocketChannel) key.channel();
@@ -87,11 +82,6 @@ public class PlainNioEchoServer133 {
                     CloseUtil.close(key.channel());
                 }
             }
-
-
         }
-
-
-
     }
 }

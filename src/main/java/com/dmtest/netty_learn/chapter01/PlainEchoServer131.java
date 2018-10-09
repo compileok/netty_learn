@@ -12,9 +12,6 @@ import java.net.Socket;
  * Created by deming on 2018/9/1.
  */
 public class PlainEchoServer131 {
-
-
-
     /*
      blocking - io 模式的代码
      每个连接都需要一个单独的线程，即使用到了线程池来避免频繁创建线程也起不了多大作用。
@@ -30,7 +27,6 @@ public class PlainEchoServer131 {
                 final Socket clientSocket = socket.accept();
                 System.out.println("Accepted connection from : "+ clientSocket);
 
-
                 new Thread(()->{
                     try {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -40,19 +36,14 @@ public class PlainEchoServer131 {
                             writer.println(reader.readLine());
                             writer.flush();
                         }
-
                     }catch (Exception e) {
                         CloseUtil.close(clientSocket);
                     }
                 }).start();
-
             }
 
         }catch (Exception e) {
-
+            // to some thing
         }
-
-
     }
-
 }
