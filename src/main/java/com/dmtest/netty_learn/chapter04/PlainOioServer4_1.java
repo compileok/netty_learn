@@ -16,13 +16,10 @@ public class PlainOioServer4_1 {
         final ServerSocket socket = new ServerSocket(port);
 
         try{
-
             while (true) {
-
                 final Socket clientSocket = socket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
                 new Thread(() ->{
-
                         OutputStream out;
                         try {
                             out = clientSocket.getOutputStream();
@@ -37,15 +34,12 @@ public class PlainOioServer4_1 {
                                 // ignore on close
                             }
                         }
-
                 }).start();
-
             }
 
         }catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
