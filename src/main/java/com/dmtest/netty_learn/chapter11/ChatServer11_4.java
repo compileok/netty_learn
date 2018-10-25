@@ -3,6 +3,7 @@ package com.dmtest.netty_learn.chapter11;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -26,10 +27,14 @@ public class ChatServer11_4 {
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(group)
                 .channel(NioServerSocketChannel.class)
-                .childHandler(new ChatServerInitializer11_3(channelGroup));
+                .childHandler(createInitializer(channelGroup));
         ChannelFuture future = bootstrap.bind(address);
         future.syncUninterruptibly();
         return future;
+    }
+
+    protected ChannelInitializer<Channel> createInitializer(ChannelGroup group) {
+        return new ChatServerInitializer11_3(group);
     }
 
     public void destroy(){
