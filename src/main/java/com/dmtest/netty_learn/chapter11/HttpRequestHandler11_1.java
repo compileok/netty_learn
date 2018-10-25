@@ -28,7 +28,8 @@ public class HttpRequestHandler11_1 extends SimpleChannelInboundHandler<FullHttp
                 send100Continue(ctx);                               // #3
             }
             System.out.println(" ----> 展示 index.html");
-            RandomAccessFile file = new RandomAccessFile("D:\\oschinagit\\netty_learn\\src\\main\\java\\com\\dmtest\\netty_learn\\chapter11\\index.html","r");    // #4
+            //RandomAccessFile file = new RandomAccessFile("D:\\oschinagit\\netty_learn\\src\\main\\java\\com\\dmtest\\netty_learn\\chapter11\\index.html","r");    // #4
+            RandomAccessFile file = new RandomAccessFile("/Users/deming/IdeaProjects/project_one/netty_learn/src/main/java/com/dmtest/netty_learn/chapter11/index.html","r");    // #4
             HttpResponse response = new DefaultFullHttpResponse(req.getProtocolVersion(),HttpResponseStatus.OK);
             response.headers().set(HttpHeaders.Names.CONTENT_TYPE,"text/plain; charset=UTF-8");
 
