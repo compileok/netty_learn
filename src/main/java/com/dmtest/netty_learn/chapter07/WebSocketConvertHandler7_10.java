@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.websocketx.*;
 import java.util.List;
 
 /**
- * Created by dimi on 2018/10/9.
+ * 2018/10/9.
  */
 @ChannelHandler.Sharable
 public class WebSocketConvertHandler7_10 extends MessageToMessageCodec<WebSocketFrame,WebSocketConvertHandler7_10.WebSocketFrame2> {
