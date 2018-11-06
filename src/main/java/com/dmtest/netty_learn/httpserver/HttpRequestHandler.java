@@ -35,7 +35,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         if (is100ContinueExpected(req)) {
             ctx.write(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.CONTINUE));
         }
-        String uri = req.getUri();
+        String uri = req.uri();
         System.out.println(" 请求链接："+uri);
         Map<String,String> resMap = new HashMap<>();
         resMap.put("method",req.method().name());
@@ -44,7 +44,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.OK,Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
         response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
 //        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=UTF-8");
-//        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json; charset=UTF-8");
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
 
 

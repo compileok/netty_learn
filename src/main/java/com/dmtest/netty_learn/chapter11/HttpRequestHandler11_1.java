@@ -21,22 +21,22 @@ public class HttpRequestHandler11_1 extends SimpleChannelInboundHandler<FullHttp
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest req) throws Exception{
-        if(wsUri.equalsIgnoreCase(req.getUri())) {
+        if(wsUri.equalsIgnoreCase(req.uri())) {
             ctx.fireChannelRead(req.retain());                       //#2
         } else {
-            if(HttpHeaders.is100ContinueExpected(req)) {
+            if(HttpUtil.is100ContinueExpected(req)) {
                 send100Continue(ctx);                               // #3
             }
             System.out.println(" ----> 展示 index.html");
             RandomAccessFile file = new RandomAccessFile("D:\\oschinagit\\netty_learn\\src\\main\\java\\com\\dmtest\\netty_learn\\chapter11\\index.html","r");    // #4
-            HttpResponse response = new DefaultFullHttpResponse(req.getProtocolVersion(),HttpResponseStatus.OK);
-            response.headers().set(HttpHeaders.Names.CONTENT_TYPE,"text/plain; charset=UTF-8");
+            HttpResponse response = new DefaultFullHttpResponse(req.protocolVersion(),HttpResponseStatus.OK);
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE,"text/plain; charset=UTF-8");
 
-            boolean keepAlive = HttpHeaders.isKeepAlive(req);
+            boolean keepAlive = HttpUtil.isKeepAlive(req);
 
             if(keepAlive) {             //  #5
-                response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, file.length());
-                response.headers().set( HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+                response.headers().set(HttpHeaderNames.CONTENT_LENGTH, file.length());
+                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
             }
             ctx.write(response);            // #6
 

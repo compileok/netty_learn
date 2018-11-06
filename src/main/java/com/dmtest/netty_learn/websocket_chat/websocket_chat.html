@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chat server</title>
+</head>
+<body>
+    <div>
+        <h2>连接到：ws://localhost:8090</h2>
+        <div id = "messageConsole">
+            <p ></p>
+        </div>
+        <input type="text" id="msgInput"  /><button onclick="send();">发送</button>
+    </div>
+</body>
+<script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    var ws = new WebSocket('ws://localhost:8090/ws');
+    ws.onopen = function(evt) {
+        writeMsg("Connection open ... "+evt.data)
+        //ws.send('Hello WebSockets!');
+    };
+    ws.onmessage = function(evt) {
+        writeMsg('Received Message: ' + evt.data);
+    };
+
+    ws.onclose = function(evt) {
+        writeMsg('Connection closed.');
+    };
+
+    function close (){
+        writeMsg('Close Connection.');
+        ws.close();
+    }
+    function send(){
+        var msg = $("#msgInput").val();
+        ws.send(msg);
+    }
+    function writeMsg(msg){
+        var html = "<p>"+msg+"</p>";
+        $("#messageConsole > p:last").append(html);
+    }
+</script>
+</html>
