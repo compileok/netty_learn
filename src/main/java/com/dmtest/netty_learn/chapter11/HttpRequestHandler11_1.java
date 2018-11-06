@@ -32,6 +32,7 @@ public class HttpRequestHandler11_1 extends SimpleChannelInboundHandler<FullHttp
             HttpResponse response = new DefaultFullHttpResponse(req.protocolVersion(),HttpResponseStatus.OK);
             response.headers().set(HttpHeaderNames.CONTENT_TYPE,"text/plain; charset=UTF-8");
 
+
             boolean keepAlive = HttpUtil.isKeepAlive(req);
 
             if(keepAlive) {             //  #5
