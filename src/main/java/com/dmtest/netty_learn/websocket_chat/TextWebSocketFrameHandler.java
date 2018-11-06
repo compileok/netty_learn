@@ -1,6 +1,5 @@
 package com.dmtest.netty_learn.websocket_chat;
 
-import com.dmtest.netty_learn.chapter11.HttpRequestHandler11_1;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -21,7 +20,6 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
         if(evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
-            ctx.pipeline().remove(HttpRequestHandler11_1.class);
             group.writeAndFlush(new TextWebSocketFrame(" Client " + ctx.channel() + " joined "));
             group.add(ctx.channel());
         } else {

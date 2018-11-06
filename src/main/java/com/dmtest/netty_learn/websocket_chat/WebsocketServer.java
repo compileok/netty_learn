@@ -28,9 +28,10 @@ public class WebsocketServer {
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(group)
                 .channel(NioServerSocketChannel.class)
-                .childHandler(new ServerInitializer());
+                .childHandler(new ServerInitializer(channelGroup));
         ChannelFuture future = bootstrap.bind(new InetSocketAddress(port));
         future.syncUninterruptibly();
+        System.out.println(" server start up on port: "+port);
         return future;
     }
     public void destroy(){
