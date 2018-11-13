@@ -1,10 +1,7 @@
 package com.dmtest.netty_learn.heart_beat;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
@@ -12,6 +9,7 @@ import io.netty.handler.codec.string.StringEncoder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 /**
  * Created by dimi on 2018/11/13.
@@ -29,11 +27,14 @@ public class HeartBeatClient  {
             Channel channel = bootstrap.connect("localhost",8090).sync().channel();
 
             //标准输入
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
+            String  text = "I am alive";
             //利用死循环，不断读取客户端在控制台上的输入内容
-            for (;;){
-                channel.writeAndFlush(bufferedReader.readLine() +"\r\n");
+            Random random = new Random();
+            while (channel.isActive()){
+                int num = random.nextInt(10);
+                System.out.println(num);
+                Thread.sleep(num * 1000);
+                channel.writeAndFlush(text);
             }
 
         }finally {
@@ -49,8 +50,23 @@ public class HeartBeatClient  {
             ChannelPipeline pipeline = ch.pipeline();
             pipeline.addLast("decoder", new StringDecoder());
             pipeline.addLast("encoder", new StringEncoder());
+            pipeline.addLast(new HeartBeatClientHandler());
 
         }
+    }
+
+
+    static class HeartBeatClientHandler extends SimpleChannelInboundHandler<String> {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+            System.out.println(" client received :" +msg);
+            if(msg!= null && msg.equals("you are out")) {
+                System.out.println(" server closed connection , so client will close too");
+                ctx.channel().closeFuture();
+            }
+        }
+
+
     }
 
 }
