@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class HeartBeatInitializer extends ChannelInitializer<Channel> {
 
-
     @Override
     protected void initChannel(Channel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();

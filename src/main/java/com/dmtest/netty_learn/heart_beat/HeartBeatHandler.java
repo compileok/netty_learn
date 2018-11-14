@@ -29,13 +29,15 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<String> {
         switch (event.state()){
             case READER_IDLE:
                 eventType = "读空闲";
-                readIdleTimes ++;
+                readIdleTimes ++; // 读空闲的计数加1
                 break;
             case WRITER_IDLE:
                 eventType = "写空闲";
+                // 不处理
                 break;
             case ALL_IDLE:
                 eventType ="读写空闲";
+                // 不处理
                 break;
         }
         System.out.println(ctx.channel().remoteAddress() + "超时事件：" +eventType);
@@ -43,7 +45,6 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<String> {
             System.out.println(" [server]读空闲超过3次，关闭连接");
             ctx.channel().writeAndFlush("you are out");
             ctx.channel().close();
-
         }
     }
     @Override

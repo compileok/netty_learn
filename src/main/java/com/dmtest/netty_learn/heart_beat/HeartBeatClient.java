@@ -14,31 +14,48 @@ import java.util.Random;
  */
 public class HeartBeatClient  {
 
-    public static void main(String[] args) throws Exception{
-        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+    int port;
+    Channel channel;
+    Random random ;
 
+    public HeartBeatClient(int port){
+        this.port = port;
+        random = new Random();
+    }
+    public static void main(String[] args) throws Exception{
+        HeartBeatClient client = new HeartBeatClient(8090);
+        client.start();
+    }
+
+    public void start() {
+        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         try{
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
                     .handler(new HeartBeatClientInitializer());
 
-            Channel channel = bootstrap.connect("localhost",8090).sync().channel();
-
+            connect(bootstrap,port);
             String  text = "I am alive";
-
-            Random random = new Random();
             while (channel.isActive()){
-                int num = random.nextInt(10);
-                System.out.println(num);
-                Thread.sleep(num * 1000);
-                channel.writeAndFlush(text);
+                sendMsg(text);
             }
-
+        }catch(Exception e){
+            // do something
         }finally {
             eventLoopGroup.shutdownGracefully();
         }
     }
 
+    public void connect(Bootstrap bootstrap,int port) throws Exception{
+        channel = bootstrap.connect("localhost",8090).sync().channel();
+    }
+
+    public void sendMsg(String text) throws Exception{
+        channel.writeAndFlush(text);
+        int num = random.nextInt(10);
+        System.out.println(" client sent msg and sleep "+num);
+        Thread.sleep(num * 1000);
+    }
 
     static class HeartBeatClientInitializer extends ChannelInitializer<Channel> {
 
@@ -48,10 +65,8 @@ public class HeartBeatClient  {
             pipeline.addLast("decoder", new StringDecoder());
             pipeline.addLast("encoder", new StringEncoder());
             pipeline.addLast(new HeartBeatClientHandler());
-
         }
     }
-
 
     static class HeartBeatClientHandler extends SimpleChannelInboundHandler<String> {
         @Override
@@ -62,8 +77,5 @@ public class HeartBeatClient  {
                 ctx.channel().closeFuture();
             }
         }
-
-
     }
-
 }
