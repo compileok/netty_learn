@@ -7,8 +7,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Random;
 
 /**
@@ -26,9 +24,8 @@ public class HeartBeatClient  {
 
             Channel channel = bootstrap.connect("localhost",8090).sync().channel();
 
-            //标准输入
             String  text = "I am alive";
-            //利用死循环，不断读取客户端在控制台上的输入内容
+
             Random random = new Random();
             while (channel.isActive()){
                 int num = random.nextInt(10);

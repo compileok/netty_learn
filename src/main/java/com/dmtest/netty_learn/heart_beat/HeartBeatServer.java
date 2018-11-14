@@ -9,7 +9,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 /**
- * Created by dimi on 2018/11/13.
+ * 2018/11/13.
  */
 public class HeartBeatServer {
 

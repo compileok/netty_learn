@@ -13,7 +13,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String s) throws Exception {
-        System.out.println(" ====== > message received : " + s);
+        System.out.println(" ====== > [server] message received : " + s);
        if("I am alive".equals(s)){
             ctx.channel().writeAndFlush("copy that");
         }else {
@@ -39,7 +39,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<String> {
                 break;
         }
         System.out.println(ctx.channel().remoteAddress() + "超时事件：" +eventType);
-        if(readIdleTimes >3){
+        if(readIdleTimes > 3){
             System.out.println(" [server]读空闲超过3次，关闭连接");
             ctx.channel().writeAndFlush("you are out");
             ctx.channel().close();
@@ -48,7 +48,7 @@ public class HeartBeatHandler extends SimpleChannelInboundHandler<String> {
     }
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.err.println("---" + ctx.channel().remoteAddress() + " is active---");
+        System.err.println("=== " + ctx.channel().remoteAddress() + " is active ===");
     }
 
 }

@@ -10,7 +10,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by dimi on 2018/11/13.
+ * 2018/11/13.
  */
 public class HeartBeatInitializer extends ChannelInitializer<Channel> {
 
